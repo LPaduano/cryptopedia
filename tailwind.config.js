@@ -9,7 +9,14 @@ module.exports = {
     "./node_modules/@heroui/react/**/*.{js,ts,jsx,tsx}", // Includi HeroUI nei content paths
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["var(--font-inter)", "sans-serif"],
+      },
+      border: {
+        1: "1px solid black",
+      },
+    },
   },
   darkMode: "class",
   plugins: [heroui()],
