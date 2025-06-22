@@ -24,9 +24,9 @@ const Navbar = () => {
       <div className="border-b-2 border-gray-100 glass fixed top-0 left-0 w-full p-4 flex items-center justify-between text-black z-30 flex-col sm:flex-row">
         {/* Logo e menu */}
         <div className="ml-26 flex items-center space-x-4">
-          <a href="/" className="font-bold text-xl">
+          <Link href="/" className="font-bold text-xl">
             CryptoPedia
-          </a>
+          </Link>
 
           <ul className="hidden lg:flex space-x-6">
             <li></li>
