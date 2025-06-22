@@ -6,13 +6,16 @@ import {
   ArrowTrendingUpIcon,
   ArrowTrendingDownIcon,
 } from "@heroicons/react/24/solid";
+
 const CryptoPrices = () => {
   const [prices, setPrices] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const fetchAllCryptoPrices = async () => {
     try {
-      const res = await fetch("/api/crypto");
+      const res = await fetch(
+        "https://cryptopedia-ai-new.vercel.app/api/crypto"
+      );
       if (!res.ok) throw new Error("Errore nel recupero dei dati dal DB");
 
       const data = await res.json();
