@@ -13,7 +13,7 @@ export const metadata = {
     description: "Crypto live data & previsioni",
     images: [
       {
-        url: "https://cryptopedia-ai-new.vercel.app/preview-meta.gif",
+        url: "https://cryptopedia-ai-new.vercel.app/preview-meta.GIF",
         width: 1200,
         height: 630,
         alt: "Anteprima di Cryptopedia",
