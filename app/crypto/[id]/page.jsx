@@ -1,14 +1,6 @@
-import clientPromise from "@/lib/mongodb";
+import clientPromise from "../../../lib/mongodb";
 
-interface CryptoDetailPageProps {
-  params: {
-    id: string; // puoi usare id della crypto, ad esempio "bitcoin"
-  };
-}
-
-export default async function CryptoDetailPage({
-  params,
-}: CryptoDetailPageProps) {
+export default async function CryptoDetailPage({ params }) {
   const { id } = params;
 
   try {

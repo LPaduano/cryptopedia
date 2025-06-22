@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/ai-predict/page.jsx",
-    "lib/mongodb.js"
+    "lib/mongodb.js",
+    "app/crypto/[id]/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
