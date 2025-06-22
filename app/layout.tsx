@@ -8,6 +8,18 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 export const metadata = {
   title: "Cryptopedia",
   description: "Crypto live data & insights",
+  openGraph: {
+    title: "Cryptopedia",
+    description: "Crypto live data & previsioni",
+    images: [
+      {
+        url: "https://cryptopedia-ai-new.vercel.app/preview-meta.gif",
+        width: 1200,
+        height: 630,
+        alt: "Anteprima di Cryptopedia",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
