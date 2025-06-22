@@ -35,7 +35,7 @@ const handler = NextAuth({
         return false;
       }
     },
-    async session({ session, token, user }) {
+    async session({ session }) {
       // puoi aggiungere anche altre info qui
       return session;
     },

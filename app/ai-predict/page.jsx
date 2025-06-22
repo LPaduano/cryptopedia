@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function AIPredictPage() {
   const [symbol, setSymbol] = useState("");
-  const [prediction, setPrediction] = useState<number | null>(null);
+  const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -30,7 +30,7 @@ export default function AIPredictPage() {
       if (!res.ok) throw new Error(data.detail || "Errore nella richiesta");
 
       setPrediction(data.predicted_price);
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message || "Errore imprevisto");
     } finally {
       setLoading(false);

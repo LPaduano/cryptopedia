@@ -4,7 +4,7 @@ const uri =
   "mongodb+srv://lpaduanosviluppo:fv7boN1wapFyCBva@cluster0.ehsjxlj.mongodb.net/myDatabaseName?retryWrites=true&w=majority";
 const options = {};
 
-let client;
+let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
 if (!(global as any)._mongoClientPromise) {

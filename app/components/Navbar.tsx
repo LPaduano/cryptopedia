@@ -4,6 +4,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import GoogleIcon from "./GoogleIcon";
 import AppleIcon from "./AppleIcon";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -28,25 +29,21 @@ const Navbar = () => {
           </a>
 
           <ul className="hidden lg:flex space-x-6">
+            <li></li>
             <li>
-              {/* <a href="/" className="hover:text-gray-700">
-                Home
-              </a> */}
-            </li>
-            <li>
-              <a href="/ai-predict" className="hover:text-gray-700">
+              <Link href="/ai-predict" className="hover:text-gray-700">
                 Predizione
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-gray-700">
-                News
-              </a>
+              {/* <a href="#" className="hover:text-gray-700"> */}
+              News
+              {/* </a> */}
             </li>
             <li>
-              <a href="#" className="hover:text-gray-700">
-                Impara
-              </a>
+              {/* <a href="#" className="hover:text-gray-700"> */}
+              Impara
+              {/* </a> */}
             </li>
           </ul>
 

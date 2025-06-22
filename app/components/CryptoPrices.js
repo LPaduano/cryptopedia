@@ -1,14 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import Link from "next/link";
 import { StarIcon as StarOutline } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import {
   ArrowTrendingUpIcon,
   ArrowTrendingDownIcon,
 } from "@heroicons/react/24/solid";
-import { fetchCryptoData } from "../../lib/fetchCryptoData";
 const CryptoPrices = () => {
   const [prices, setPrices] = useState([]);
   const [loading, setLoading] = useState(true);
