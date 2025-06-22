@@ -35,16 +35,8 @@ const Navbar = () => {
                 Predizione
               </Link>
             </li>
-            <li>
-              {/* <a href="#" className="hover:text-gray-700"> */}
-              News
-              {/* </a> */}
-            </li>
-            <li>
-              {/* <a href="#" className="hover:text-gray-700"> */}
-              Impara
-              {/* </a> */}
-            </li>
+            <li>News</li>
+            <li>Impara</li>
           </ul>
 
           {/* Pulsanti login/register */}
@@ -108,24 +100,24 @@ const Navbar = () => {
             <div className="absolute top-0 left-0 w-full bg-white bg-opacity-90 p-4 rounded-lg h-[100vh] z-50">
               <ul className="flex flex-col items-center space-y-4 mt-8">
                 <li>
-                  <a href="/" className="text-black hover:text-gray-700">
+                  <Link href="/" className="text-black hover:text-gray-700">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-black hover:text-gray-700">
-                    Servizi
-                  </a>
+                  <Link href="/" className="text-black hover:text-gray-700">
+                    predizioni
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-black hover:text-gray-700">
+                  {/* <a href="#" className="text-black hover:text-gray-700">
                     Chi siamo
-                  </a>
+                  </a> */}
                 </li>
                 <li>
-                  <a href="#" className="text-black hover:text-gray-700">
+                  {/* <a href="#" className="text-black hover:text-gray-700">
                     Contatti
-                  </a>
+                  </a> */}
                 </li>
               </ul>
             </div>
