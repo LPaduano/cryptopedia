@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import clientPromise from "../../../../lib/mongodb";
 
 // Configurazione di NextAuth
-const authOptions = {
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -41,10 +41,11 @@ const authOptions = {
 
         console.log("User ID in signIn callback:", user._id); // Verifica che l'ID venga aggiunto
 
-        return true; // Completa il login
+        // Restituisci true per completare il login
+        return true;
       } catch (error) {
         console.error("Errore nel signIn callback:", error);
-        return false; // Se si verifica un errore, il login non avverrà
+        return false;
       }
     },
 
@@ -70,5 +71,7 @@ const authOptions = {
   },
 };
 
-// Esportiamo NextAuth come handler per GET e POST
-export { NextAuth as default };
+// Handler che gestisce GET e POST per NextAuth
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };
