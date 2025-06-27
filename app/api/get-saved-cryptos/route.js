@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route"; // Aggiungi il percorso corretto al tuo authOptions
 import clientPromise from "../../../lib/mongodb"; // Modifica se necessario
 
-export async function GET(req) {
+export async function GET() {
   // Ottieni la sessione dell'utente
   const session = await getServerSession(authOptions);
 

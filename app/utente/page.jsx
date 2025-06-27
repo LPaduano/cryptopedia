@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export default function PaginaUtente() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     if (session?.user?.email) {

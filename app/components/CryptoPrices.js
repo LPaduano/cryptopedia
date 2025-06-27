@@ -12,7 +12,7 @@ import { useSession } from "next-auth/react";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 const CryptoPrices = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   const {
     data: prices = [],
