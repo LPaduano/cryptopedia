@@ -8,7 +8,8 @@ export default async function CryptoDetailPage({ params }) {
     const client = await clientPromise;
     const db = client.db("crypto-db");
     const cryptosCollection = db.collection("cryptos");
-
+    const cryptosDescription = db.collection("cryptosDescriptions");
+    const cryptoDesc = await cryptosDescription.findOne({ coinId: id });
     const crypto = await cryptosCollection.findOne({ id }); // oppure { _id: new ObjectId(id) } se usi Mongo _id
 
     if (!crypto) {
@@ -71,7 +72,10 @@ export default async function CryptoDetailPage({ params }) {
             <h2>Descrizione</h2>
             <div
               dangerouslySetInnerHTML={{
-                __html: crypto.description?.it || crypto.description?.en || "",
+                __html:
+                  cryptoDesc.description?.it ||
+                  cryptoDesc.description?.en ||
+                  "",
               }}
             />
           </div>
