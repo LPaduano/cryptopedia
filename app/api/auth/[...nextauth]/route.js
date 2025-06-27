@@ -1,9 +1,11 @@
+// app/api/auth/[...nextauth]/route.js
+
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import clientPromise from "../../../../lib/mongodb";
 
-// Configurazione di NextAuth
-export const authOptions = {
+// Configurazione di NextAuth separata
+const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -72,6 +74,6 @@ export const authOptions = {
 };
 
 // Handler che gestisce GET e POST per NextAuth
-const handler = NextAuth(authOptions);
+export const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
