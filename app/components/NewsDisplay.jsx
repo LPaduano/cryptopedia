@@ -3,17 +3,6 @@
 
 import React, { useEffect, useState } from "react";
 
-interface NewsItem {
-  title: string;
-  description: string;
-  image: string;
-  url: string;
-}
-
-interface NewsDisplayProps {
-  news: NewsItem[];
-}
-
 const NewsDisplay = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +26,7 @@ const NewsDisplay = () => {
     <section className="mt-10 px-4">
       <h2 className="text-2xl font-bold mb-4">Crypto News</h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {news.map((item: any, idx) => (
+        {news.map((item, idx) => (
           <a
             key={idx}
             href={item.url}
