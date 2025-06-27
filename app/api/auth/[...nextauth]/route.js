@@ -5,7 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 import clientPromise from "../../../../lib/mongodb";
 
 // Configurazione di NextAuth separata
-const authOptions = {
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
