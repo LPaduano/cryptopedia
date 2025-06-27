@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import clientPromise from "../../../../lib/mongodb";
 
 // Configurazione di NextAuth
-export const authOptions = {
+const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -71,6 +71,4 @@ export const authOptions = {
 };
 
 // Esportiamo NextAuth come handler per GET e POST
-const handler = NextAuth(authOptions);
-
-export { handler as GET, handler as POST };
+export { NextAuth as default };
