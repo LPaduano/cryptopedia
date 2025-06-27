@@ -41,11 +41,10 @@ export const authOptions = {
 
         console.log("User ID in signIn callback:", user._id); // Verifica che l'ID venga aggiunto
 
-        // Restituisci true per completare il login
-        return true;
+        return true; // Completa il login
       } catch (error) {
         console.error("Errore nel signIn callback:", error);
-        return false;
+        return false; // Se si verifica un errore, il login non avverrà
       }
     },
 
@@ -71,7 +70,7 @@ export const authOptions = {
   },
 };
 
-// Handler che gestisce GET e POST per NextAuth
+// Esportiamo NextAuth come handler per GET e POST
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
