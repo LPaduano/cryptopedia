@@ -10,19 +10,14 @@ export async function GET() {
     const db = client.db("crypto-db");
     const collection = db.collection("cryptos");
 
-    const cryptoList = await collection.find({}).toArray();
-    console.log("crypto recuperate correttamente da db");
+    // Recupera solo il campo "coinId" per ogni crypto
+    const cryptoIds = await collection
+      .find({}, { projection: { _id: 0, id: 1 } })
+      .toArray();
+    const coinIdsArray = cryptoIds.map((crypto) => crypto.id);
 
-    // ✅ Imposta gli header direttamente durante la creazione della risposta
-    return NextResponse.json(cryptoList, {
-      status: 200,
-      headers: {
-        "Cache-Control": "public, max-age=180, stale-while-revalidate=30",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET",
-        "Access-Control-Allow-Headers": "Content-Type",
-      },
-    });
+    // Ritorna la lista di solo coinIds
+    return NextResponse.json(coinIdsArray);
   } catch (error) {
     console.error("Errore nel recupero delle crypto dal DB:", error);
     return new NextResponse("Errore server", { status: 500 });

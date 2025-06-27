@@ -8,7 +8,7 @@ const NewsDisplay = () => {
   const [loading, setLoading] = useState(true);
   const fetchAllCryptoNews = async () => {
     try {
-      const res = await fetch("https://cryptopedia-ai-new.vercel.app/api/news");
+      const res = await fetch("/api/news");
       if (!res.ok) throw new Error("Errore nel recupero dei dati dal DB");
 
       const data = await res.json();

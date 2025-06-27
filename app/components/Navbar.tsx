@@ -45,13 +45,15 @@ const Navbar = () => {
               <p>Loading...</p>
             ) : session?.user ? (
               <>
-                <Image
-                  src={session.user.image || "/default-avatar.png"}
-                  alt="User avatar"
-                  width={32}
-                  height={32}
-                  className="rounded-full"
-                />
+                <Link href="/utente">
+                  <Image
+                    src={session.user.image || "/default-avatar.png"}
+                    alt="User avatar"
+                    width={32}
+                    height={32}
+                    className="rounded-full cursor-pointer"
+                  />
+                </Link>
                 <button onClick={() => signOut()}>Logout</button>
               </>
             ) : (

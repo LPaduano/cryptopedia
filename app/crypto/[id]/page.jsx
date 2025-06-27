@@ -11,7 +11,7 @@ export default async function CryptoDetailPage({ params }) {
     const cryptosDescription = db.collection("cryptosDescriptions");
     const cryptoDesc = await cryptosDescription.findOne({ coinId: id });
     const crypto = await cryptosCollection.findOne({ id }); // oppure { _id: new ObjectId(id) } se usi Mongo _id
-    if (!crypto) {
+    if (!cryptoDesc) {
       return (
         <div className="p-6 text-red-600">
           <h1 className="text-2xl font-bold">Crypto non trovata nel DB</h1>
@@ -119,7 +119,7 @@ export default async function CryptoDetailPage({ params }) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Sito Web
+                  {cryptoDesc.homepage}
                 </a>
               </li>
             )}
