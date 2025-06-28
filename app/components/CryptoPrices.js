@@ -152,16 +152,20 @@ const CryptoPrices = () => {
                     )}
                   </td>
                   <td> {index + 1}</td>
-                  <td className="p-2 flex items-center gap-2 font-sans text-right bg-white sticky left-0 z-10 sm:static sm:bg-transparent">
-                    <img
-                      src={crypto.image}
-                      alt={crypto.name}
-                      className="w-5 h-5"
-                    />
-                    <strong className="sm: text-left">{crypto.name}</strong>
-                    <p className="py-6 text-gray-400">
-                      {crypto.symbol.toUpperCase()}
-                    </p>
+                  <td className="p-2 bg-white sticky left-0 z-10 sm:static sm:bg-transparent">
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={crypto.image}
+                        alt={crypto.name}
+                        className="w-5 h-5 shrink-0"
+                      />
+                      <div className="flex flex-col">
+                        <strong className="text-sm">{crypto.name}</strong>
+                        <p className="text-xs text-gray-400">
+                          {crypto.symbol.toUpperCase()}
+                        </p>
+                      </div>
+                    </div>
                   </td>
                   <td className="p-2 font-sans text-right pr-4">
                     {formatPrice(crypto.current_price)}
