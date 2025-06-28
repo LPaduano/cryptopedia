@@ -23,9 +23,12 @@ export async function GET() {
       _id: new ObjectId(userId), // ✅ Conversione corretta
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: "ID utente non valido" }), {
-      status: 400,
-    });
+    return new Response(
+      JSON.stringify({ error: "ID utente non valido, " + error }),
+      {
+        status: 400,
+      }
+    );
   }
 
   return new Response(
