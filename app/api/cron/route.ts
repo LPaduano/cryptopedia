@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { saveCryptoToDb } from "@/lib/saveCryptoToDb"; // Assicurati che il path sia corretto
+import { saveCryptoToDb } from "../../../lib/saveCryptoToDb"; // Assicurati che il path sia corretto
 
 export async function GET(req: Request) {
   const auth = req.headers.get("Authorization");
