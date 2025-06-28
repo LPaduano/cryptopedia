@@ -1,5 +1,3 @@
-// lib/mongodb.ts
-
 import { MongoClient } from "mongodb";
 
 const uri =
@@ -7,19 +5,19 @@ const uri =
 const options = {};
 
 // Usa una dichiarazione globale sicura per evitare problemi in dev con hot-reload
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
-
 declare global {
   // For dev only - next.js ricarica a caldo i moduli e dobbiamo evitare più connessioni
   // eslint-disable-next-line no-var
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-if (!global._mongoClientPromise) {
-  client = new MongoClient(uri, options);
-  global._mongoClientPromise = client.connect();
-}
-clientPromise = global._mongoClientPromise;
+// Inizializzazione della variabile clientPromise
+const clientPromise: Promise<MongoClient> =
+  global._mongoClientPromise ||
+  (async () => {
+    const client = new MongoClient(uri, options);
+    global._mongoClientPromise = client.connect();
+    return global._mongoClientPromise;
+  })();
 
 export default clientPromise;
