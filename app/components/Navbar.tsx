@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import Image from "next/image";
 import GoogleIcon from "./GoogleIcon";
 import AppleIcon from "./AppleIcon";
@@ -98,7 +98,6 @@ const Navbar = () => {
                     className="rounded-full cursor-pointer"
                   />
                 </Link>
-                {/* <button onClick={() => signOut()}>Logout</button> */}
               </>
             )}
           </div>
