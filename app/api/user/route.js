@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]/route"; // importa da dove definisci NextAuth
+import { authOptions } from "../../../lib/authOptions"; // importa da dove definisci NextAuth
 import clientPromise from "../../../lib/mongodb";
 
 export async function GET() {

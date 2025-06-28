@@ -49,12 +49,7 @@ const CryptoPrices = () => {
         console.error("Utente non trovato nella sessione");
         return;
       }
-
-      // Verifica se la criptovaluta è già nella lista salvata
-      const user = await fetch(`/api/get-saved-cryptos?userId=${userId}`).then(
-        (res) => res.json()
-      );
-      const isSaved = user.savedCryptos.includes(cryptoId); // Verifica se il cryptoId è già nella lista
+      const isSaved = savedCryptos.has(cryptoId);
 
       const response = await fetch("/api/save-crypto", {
         method: "POST",
