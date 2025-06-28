@@ -11,7 +11,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 const aggregateTransactions = (transactions) => {
   // Ordina le transazioni per data
   const sortedTx = [...transactions].sort(
@@ -144,11 +144,13 @@ const WalletPage = () => {
     }
   };
 
-  if (!session)
+  if (loading || !session)
     return (
-      <p className="mt-16">Bisogna essere loggati per accedere al wallet</p>
+      <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <ArrowPathIcon className="w-8 h-8 text-gray-600 animate-spin" />
+        <span className="ml-3 text-gray-600">Caricamento...</span>
+      </div>
     );
-  if (loading) return <p className="mt-16">Caricamento in corso...</p>;
 
   return (
     <div className="mt-16 max-w-2xl mx-auto p-4">

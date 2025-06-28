@@ -1,19 +1,20 @@
-import { NextResponse } from "next/server";
-import { MongoClient } from "mongodb";
+import { NextRequest, NextResponse } from "next/server";
+import clientPromise from "../../../lib/mongodb";
 
+type PostBody = {
+  ids: string[];
+};
+
+// GET tutte le crypto
 export async function GET() {
-  const uri = process.env.MONGODB_URI!;
-  const client = new MongoClient(uri);
-
   try {
-    await client.connect();
+    const client = await clientPromise;
     const db = client.db("crypto-db");
     const collection = db.collection("cryptos");
 
     const cryptoList = await collection.find({}).toArray();
-    console.log("crypto recuperate correttamente da db");
+    console.log("✅ Crypto recuperate dal DB");
 
-    // ✅ Imposta gli header direttamente durante la creazione della risposta
     return NextResponse.json(cryptoList, {
       status: 200,
       headers: {
@@ -24,9 +25,47 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Errore nel recupero delle crypto dal DB:", error);
+    console.error("❌ Errore GET:", error);
     return new NextResponse("Errore server", { status: 500 });
-  } finally {
-    await client.close();
   }
+}
+
+// POST con lista di ID
+export async function POST(req: NextRequest) {
+  try {
+    const body = (await req.json()) as PostBody;
+    const { ids } = body;
+
+    if (!Array.isArray(ids) || ids.some((id) => typeof id !== "string")) {
+      return NextResponse.json(
+        { error: "Formato ID non valido" },
+        { status: 400 }
+      );
+    }
+
+    const client = await clientPromise;
+    const db = client.db("crypto-db");
+
+    const cryptos = await db
+      .collection("cryptos")
+      .find({ id: { $in: ids } })
+      .toArray();
+
+    return NextResponse.json(cryptos);
+  } catch (error) {
+    console.error("❌ Errore POST:", error);
+    return NextResponse.json({ error: "Errore server" }, { status: 500 });
+  }
+}
+
+// (opzionale) Risposta preflight CORS
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
 }

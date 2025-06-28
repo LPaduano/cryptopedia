@@ -21,31 +21,30 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="border-b-2 border-gray-100 glass fixed top-0 left-0 w-full p-4 z-30 bg-white">
-        <div className="flex items-center justify-between max-w-6xl mx-auto flex-row-reverse">
+      <div className="border-b-2 border-gray-100 glass fixed top-0 left-0 w-full p-4 z-30 bg-white lg:px-26">
+        <div className="flex items-center justify-between w-full flex-row-reverse lg:flex-row">
           {/* Logo */}
-          <div className="flex items-center justify-center w-full sm:w-auto">
+          <div className="flex items-center justify-center w-full sm:w-auto gap-12">
             <Link
               href="/"
               className="font-bold text-2xl text-center block w-full sm:w-auto"
             >
               CryptoPedia
             </Link>
+            {/* Menu desktop */}
+            <ul className="hidden lg:flex space-x-6 items-center">
+              <li>
+                <Link href="/ai-predict" className="hover:text-gray-700">
+                  Predizione
+                </Link>
+              </li>
+              <li>
+                <Link href="/wallet" className="hover:text-gray-700">
+                  Wallet
+                </Link>
+              </li>
+            </ul>
           </div>
-
-          {/* Menu desktop */}
-          <ul className="hidden lg:flex space-x-6 items-center">
-            <li>
-              <Link href="/ai-predict" className="hover:text-gray-700">
-                Predizione
-              </Link>
-            </li>
-            <li>
-              <Link href="/wallet" className="hover:text-gray-700">
-                Wallet
-              </Link>
-            </li>
-          </ul>
 
           {/* Login/Register o Avatar */}
           <div className="hidden sm:flex items-center gap-4">
@@ -62,7 +61,6 @@ const Navbar = () => {
                     className="rounded-full cursor-pointer"
                   />
                 </Link>
-                <button onClick={() => signOut()}>Logout</button>
               </>
             ) : (
               <>

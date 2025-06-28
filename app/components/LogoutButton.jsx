@@ -17,7 +17,7 @@ const LogoutButton = () => {
   return (
     <button
       onClick={handleLogout}
-      className={`flex items-center gap-2 px-3 py-1 text-sm text-white bg-red-500 hover:bg-red-600 rounded transition-all duration-200 transform ${
+      className={`flex items-center gap-2 px-4 py-2 text-sm text-white bg-red-500 hover:bg-red-600 rounded transition-all duration-200 transform ${
         clicked ? "scale-95 opacity-80" : ""
       }`}
     >

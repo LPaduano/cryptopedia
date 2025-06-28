@@ -9,6 +9,7 @@ import {
   ArrowTrendingDownIcon,
 } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 const CryptoPrices = () => {
@@ -88,7 +89,14 @@ const CryptoPrices = () => {
     }
   };
 
-  if (isLoading) return <p>Caricamento...</p>;
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <ArrowPathIcon className="h-10 w-10 text-gray-600 animate-spin" />
+        <span className="ml-3 text-gray-600 text-lg">Caricamento dati...</span>
+      </div>
+    );
+  }
   if (error) return <p>Errore nel caricamento</p>;
 
   const formatPrice = (value) => {
