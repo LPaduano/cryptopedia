@@ -44,7 +44,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/ai-predict" className="hover:text-gray-700">
+                <Link href="/news" className="hover:text-gray-700">
                   News
                 </Link>
               </li>
