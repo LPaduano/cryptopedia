@@ -1,23 +1,18 @@
-// app/api/cron/route.ts
 import { NextResponse } from "next/server";
-import { saveCryptoToDb } from "../../../lib/saveCryptoToDb";
+import { saveCryptoToDb } from "@/lib/saveCryptoToDb"; // Assicurati che il path sia corretto
 
 export async function GET(req: Request) {
-  const authHeader = req.headers.get("authorization");
-  const expectedSecret = process.env.CRON_SECRET;
+  const auth = req.headers.get("Authorization");
 
-  if (authHeader !== `Bearer ${expectedSecret}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
+    return new NextResponse("Unauthorized", { status: 401 });
   }
 
   try {
     await saveCryptoToDb();
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("Errore durante il cronjob:", error);
-    return NextResponse.json(
-      { error: "Errore durante il cronjob" },
-      { status: 500 }
-    );
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error("Errore cron job:", err);
+    return new NextResponse("Errore interno", { status: 500 });
   }
 }
