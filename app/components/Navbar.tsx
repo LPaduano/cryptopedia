@@ -36,7 +36,11 @@ const Navbar = () => {
               </Link>
             </li>
             <li>News</li>
-            <li>Impara</li>
+            <li>
+              <Link href="/wallet" className="hover:text-gray-700">
+                Wallet
+              </Link>
+            </li>
           </ul>
 
           {/* Pulsanti login/register */}
