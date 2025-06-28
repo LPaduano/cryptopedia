@@ -2,7 +2,10 @@ import { MongoClient } from "mongodb";
 
 const uri =
   "mongodb+srv://lpaduanosviluppo:fv7boN1wapFyCBva@cluster0.ehsjxlj.mongodb.net/myDatabaseName?retryWrites=true&w=majority";
-const options = {};
+const options = {
+  connectTimeoutMS: 50000, // aumenta timeout a 50s
+  socketTimeoutMS: 50000,
+};
 
 // Usa una dichiarazione globale sicura per evitare problemi in dev con hot-reload
 declare global {
