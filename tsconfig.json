@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["next-auth"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -27,9 +28,10 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
+    "types",
     ".next/types/**/*.ts",
     "app/ai-predict/page.jsx",
-    "lib/mongodb.js",
+    "lib/mongodb.ts",
     "app/crypto/[id]/page.jsx",
     "app/api/auth/[...nextauth]/route.js"
   ],
