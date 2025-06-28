@@ -1,4 +1,4 @@
-import { saveCryptoToDB } from "./saveCryptoToDb";
+import { saveCryptoToDb } from "./saveCryptoToDb";
 
-saveCryptoToDB();
-setInterval(saveCryptoToDB, 60 * 1000);
+saveCryptoToDb();
+setInterval(saveCryptoToDb, 60 * 1000);
