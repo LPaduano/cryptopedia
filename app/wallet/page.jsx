@@ -97,9 +97,13 @@ const WalletPage = () => {
 
   const handleAddTransaction = async () => {
     if (!selectedCrypto || !quantity || !price) return;
+    const uniqueId = `${Date.now()}-${Math.random()
+      .toString(36)
+      .substring(2, 10)}`;
 
     const newTx = {
-      id: selectedCrypto,
+      id: uniqueId,
+      name: selectedCrypto,
       quantity: parseFloat(quantity),
       price: parseFloat(price),
     };
@@ -122,9 +126,29 @@ const WalletPage = () => {
       alert("Errore nell'aggiunta della transazione.");
     }
   };
+  const handleDeleteTransaction = async (transactionId) => {
+    try {
+      const res = await fetch("/api/wallet", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: transactionId }),
+      });
 
-  if (!session) return <p>Bisogna essere loggati per accedere al wallet</p>;
-  if (loading) return <p>Caricamento in corso...</p>;
+      if (!res.ok) throw new Error("Errore nell'eliminazione");
+
+      const data = await res.json();
+      setTransactions(data.walletTransactions || []);
+      setChartData(aggregateTransactions(data.walletTransactions || []));
+    } catch (err) {
+      alert("Errore durante l'eliminazione della transazione.");
+    }
+  };
+
+  if (!session)
+    return (
+      <p className="mt-16">Bisogna essere loggati per accedere al wallet</p>
+    );
+  if (loading) return <p className="mt-16">Caricamento in corso...</p>;
 
   return (
     <div className="mt-16 max-w-2xl mx-auto p-4">
@@ -173,41 +197,52 @@ const WalletPage = () => {
       </div>
 
       {/* Tabella delle transazioni */}
-      <table className="w-full table-auto border mt-8">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border px-2 py-1">Crypto</th>
-            <th className="border px-2 py-1">Quantità</th>
-            <th className="border px-2 py-1">Prezzo Acquisto</th>
-            <th className="border px-2 py-1">Prezzo Attuale</th>
-            <th className="border px-2 py-1">Profitto/Perdita</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((tx, index) => {
-            const current =
-              cryptoList.find((c) => c.id === tx.id)?.current_price ?? 0;
-            const profit = (current - tx.price) * tx.quantity;
-            const isPositive = profit >= 0;
+      <div className="overflow-x-auto w-full mt-8">
+        <table className="min-w-[600px] table-auto border">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="border px-2 py-1">Crypto</th>
+              <th className="border px-2 py-1">Quantità</th>
+              <th className="border px-2 py-1">Prezzo Acquisto</th>
+              <th className="border px-2 py-1">Prezzo Attuale</th>
+              <th className="border px-2 py-1">Profitto/Perdita</th>
+              <th className="border px-2 py-1">Azioni</th>
+            </tr>
+          </thead>
+          <tbody>
+            {transactions.map((tx, index) => {
+              const current =
+                cryptoList.find((c) => c.id === tx.name)?.current_price ?? 0;
+              const profit = (current - tx.price) * tx.quantity;
+              const isPositive = profit >= 0;
 
-            return (
-              <tr key={index}>
-                <td className="border px-2 py-1">{tx.id}</td>
-                <td className="border px-2 py-1">{tx.quantity}</td>
-                <td className="border px-2 py-1">€{tx.price.toFixed(2)}</td>
-                <td className="border px-2 py-1">€{current.toFixed(2)}</td>
-                <td
-                  className={`border px-2 py-1 ${
-                    isPositive ? "text-green-600" : "text-red-600"
-                  }`}
-                >
-                  {isPositive ? "+" : "-"}€{Math.abs(profit).toFixed(2)}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+              return (
+                <tr key={index}>
+                  <td className="border px-2 py-1">{tx.name}</td>
+                  <td className="border px-2 py-1">{tx.quantity}</td>
+                  <td className="border px-2 py-1">€{tx.price.toFixed(2)}</td>
+                  <td className="border px-2 py-1">€{current.toFixed(2)}</td>
+                  <td
+                    className={`border px-2 py-1 ${
+                      isPositive ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    {isPositive ? "+" : "-"}€{Math.abs(profit).toFixed(2)}
+                  </td>
+                  <td className="border px-2 py-1 text-center">
+                    <button
+                      onClick={() => handleDeleteTransaction(tx.id)}
+                      className="text-red-500 hover:text-red-700 text-sm"
+                    >
+                      Elimina
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

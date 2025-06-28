@@ -1,4 +1,3 @@
-// app/api/wallet/route.ts
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../../lib/authOptions";
@@ -12,7 +11,7 @@ export async function GET() {
 
   try {
     const client = await clientPromise;
-    const db = client.db("crypto-db"); // usa il nome di default se non specificato
+    const db = client.db("crypto-db");
 
     const user = await db
       .collection("users")
@@ -35,7 +34,7 @@ export async function POST(req) {
 
   try {
     const body = await req.json();
-    const { id, quantity, price } = body;
+    const { id, name, quantity, price } = body;
 
     if (!id || !quantity || !price) {
       return NextResponse.json({ error: "Invalid input" }, { status: 400 });
@@ -45,16 +44,13 @@ export async function POST(req) {
     const db = client.db("crypto-db");
 
     const userEmail = session.user.email.trim();
-    const debugUser = await db
-      .collection("users")
-      .findOne({ email: userEmail });
-    console.log("DEBUG USER:", debugUser);
-    const updateResult = await db.collection("users").updateOne(
+    await db.collection("users").updateOne(
       { email: userEmail },
       {
         $push: {
           walletTransactions: {
             id,
+            name,
             quantity,
             price,
             date: new Date(),
@@ -63,16 +59,6 @@ export async function POST(req) {
       }
     );
 
-    // Check se è stato aggiornato almeno un documento
-    if (updateResult.matchedCount === 0) {
-      console.warn("⚠️ Nessun utente trovato con email:", userEmail);
-      return NextResponse.json(
-        { error: "Utente non trovato" },
-        { status: 404 }
-      );
-    }
-
-    // Recupera il documento aggiornato
     const updatedUser = await db
       .collection("users")
       .findOne({ email: userEmail });
@@ -85,6 +71,57 @@ export async function POST(req) {
     console.error("Errore POST:", error);
     return NextResponse.json(
       { error: "Errore nel salvataggio" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req) {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user?.email) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const { id } = await req.json();
+
+    if (!id) {
+      return NextResponse.json({ error: "ID mancante" }, { status: 400 });
+    }
+
+    const client = await clientPromise;
+    const db = client.db("crypto-db");
+    const userEmail = session.user.email.trim();
+
+    // Rimuove la transazione con l'id specificato
+    const result = await db.collection("users").updateOne(
+      { email: userEmail },
+      {
+        $pull: {
+          walletTransactions: { id },
+        },
+      }
+    );
+
+    if (result.modifiedCount === 0) {
+      return NextResponse.json(
+        { error: "Transazione non trovata" },
+        { status: 404 }
+      );
+    }
+
+    const updatedUser = await db
+      .collection("users")
+      .findOne({ email: userEmail });
+
+    return NextResponse.json({
+      success: true,
+      walletTransactions: updatedUser.walletTransactions,
+    });
+  } catch (error) {
+    console.error("Errore DELETE:", error);
+    return NextResponse.json(
+      { error: "Errore nell'eliminazione" },
       { status: 500 }
     );
   }
