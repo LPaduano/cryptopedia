@@ -29,7 +29,7 @@ export async function GET() {
       email: user.email,
       image: user.image,
       createdAt: user.createdAt,
-      savedCryptos: user["saved-cryptos"] || [],
+      savedCryptos: user["savedCryptos"] || [],
       status: user.status || "free",
     });
   } catch (error) {

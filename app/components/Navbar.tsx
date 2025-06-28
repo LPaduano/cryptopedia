@@ -21,21 +21,25 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="border-b-2 border-gray-100 glass fixed top-0 left-0 w-full p-4 flex items-center justify-between text-black z-30 flex-col sm:flex-row">
-        {/* Logo e menu */}
-        <div className="ml-26 flex items-center space-x-4">
-          <Link href="/" className="font-bold text-xl">
-            CryptoPedia
-          </Link>
+      <div className="border-b-2 border-gray-100 glass fixed top-0 left-0 w-full p-4 z-30 bg-white">
+        <div className="flex items-center justify-between max-w-6xl mx-auto flex-row-reverse">
+          {/* Logo */}
+          <div className="flex items-center justify-center w-full sm:w-auto">
+            <Link
+              href="/"
+              className="font-bold text-2xl text-center block w-full sm:w-auto"
+            >
+              CryptoPedia
+            </Link>
+          </div>
 
-          <ul className="hidden lg:flex space-x-6">
-            <li></li>
+          {/* Menu desktop */}
+          <ul className="hidden lg:flex space-x-6 items-center">
             <li>
               <Link href="/ai-predict" className="hover:text-gray-700">
                 Predizione
               </Link>
             </li>
-            <li>News</li>
             <li>
               <Link href="/wallet" className="hover:text-gray-700">
                 Wallet
@@ -43,8 +47,8 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {/* Pulsanti login/register */}
-          <div className="absolute right-2 hidden items-center justify-end gap-6 w-60 mr-24 sm:flex">
+          {/* Login/Register o Avatar */}
+          <div className="hidden sm:flex items-center gap-4">
             {status === "loading" ? (
               <p>Loading...</p>
             ) : session?.user ? (
@@ -64,74 +68,103 @@ const Navbar = () => {
               <>
                 <button
                   onClick={() => setModalType("login")}
-                  className="w-20 px-1 py-0.5 cursor-pointer hover:opacity-70 bg-black text-white rounded-sm"
+                  className="px-3 py-1 bg-black text-white rounded hover:opacity-70"
                 >
                   Accedi
                 </button>
                 <button
                   onClick={() => setModalType("register")}
-                  className="w-20 px-1 py-0.5 cursor-pointer hover:opacity-70 bg-white text-black rounded-sm border-black border"
+                  className="px-3 py-1 border border-black text-black rounded hover:opacity-70"
                 >
                   Registrati
                 </button>
               </>
             )}
           </div>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="absolute left-2 lg:hidden text-black focus:outline-none z-40"
-          onClick={toggleMenu}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            />
-          </svg>
-        </button>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden relative w-[100vw] h-[100vh] z-50">
-            <div className="absolute top-0 left-0 w-full bg-white bg-opacity-90 p-4 rounded-lg h-[100vh] z-50">
-              <ul className="flex flex-col items-center space-y-4 mt-8">
-                <li>
-                  <Link href="/" className="text-black hover:text-gray-700">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/" className="text-black hover:text-gray-700">
-                    predizioni
-                  </Link>
-                </li>
-                <li>
-                  {/* <a href="#" className="text-black hover:text-gray-700">
-                    Chi siamo
-                  </a> */}
-                </li>
-                <li>
-                  {/* <a href="#" className="text-black hover:text-gray-700">
-                    Contatti
-                  </a> */}
-                </li>
-              </ul>
-            </div>
+          {/* Avatar mobile */}
+          <div className="flex absolute right-3 lg:hidden">
+            {status === "loading" ? (
+              <p>Loading...</p>
+            ) : (
+              <>
+                <Link href="/utente">
+                  <Image
+                    src={
+                      session?.user.image
+                        ? session?.user.image
+                        : "/default-avatar.png"
+                    }
+                    alt="User avatar"
+                    width={32}
+                    height={32}
+                    className="rounded-full cursor-pointer"
+                  />
+                </Link>
+                {/* <button onClick={() => signOut()}>Logout</button> */}
+              </>
+            )}
           </div>
-        )}
+          {/* Burger menu */}
+          <button className="lg:hidden block mt-2 sm:mt-0" onClick={toggleMenu}>
+            <svg
+              className="w-6 h-6 text-black"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
-      {/* Modal + overlay */}
+      {/* Mobile Menu (centrato e ordinato) */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 bg-white bg-opacity-95 z-40 flex flex-col items-center justify-center space-y-6">
+          <button
+            className="absolute top-4 right-4 text-black"
+            onClick={toggleMenu}
+          >
+            ✕
+          </button>
+          <Link href="/" className="text-xl" onClick={toggleMenu}>
+            Home
+          </Link>
+          <Link href="/ai-predict" className="text-xl" onClick={toggleMenu}>
+            Predizione
+          </Link>
+          <Link href="/wallet" className="text-xl" onClick={toggleMenu}>
+            Wallet
+          </Link>
+          {status !== "loading" && !session?.user && (
+            <div className="flex flex-col items-center space-y-2">
+              <button
+                onClick={() => {
+                  setModalType("login");
+                  toggleMenu();
+                }}
+                className="w-32 px-4 py-2 bg-black text-white rounded"
+              >
+                Accedi
+              </button>
+              <button
+                onClick={() => {
+                  setModalType("register");
+                  toggleMenu();
+                }}
+                className="w-32 px-4 py-2 border border-black rounded"
+              >
+                Registrati
+              </button>
+            </div>
+          )}
+        </div>
+      )}
       {modalType && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           {/* Overlay separato */}
@@ -147,13 +180,13 @@ const Navbar = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                stroke-Width="1.5"
                 stroke="currentColor"
                 className="size-6"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
               </svg>
