@@ -213,12 +213,24 @@ const WalletPage = () => {
             {transactions.map((tx, index) => {
               const current =
                 cryptoList.find((c) => c.id === tx.name)?.current_price ?? 0;
+              const currentCrypto = cryptoList.find((c) => c.id === tx.name);
               const profit = (current - tx.price) * tx.quantity;
               const isPositive = profit >= 0;
 
               return (
                 <tr key={index}>
-                  <td className="border px-2 py-1">{tx.name}</td>
+                  <td className="border px-2 py-1">
+                    <div className="flex items-center justify-evenly">
+                      <img
+                        src={currentCrypto.image}
+                        alt={currentCrypto.name}
+                        className="w-5 h-5 shrink-0"
+                      />
+                      <p className="uppercase text-xs text-gray-600">
+                        {currentCrypto.symbol}
+                      </p>
+                    </div>
+                  </td>
                   <td className="border px-2 py-1">{tx.quantity}</td>
                   <td className="border px-2 py-1">€{tx.price.toFixed(2)}</td>
                   <td className="border px-2 py-1">€{current.toFixed(2)}</td>
