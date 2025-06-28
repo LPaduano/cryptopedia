@@ -43,6 +43,11 @@ const Navbar = () => {
                   Wallet
                 </Link>
               </li>
+              <li>
+                <Link href="/ai-predict" className="hover:text-gray-700">
+                  News
+                </Link>
+              </li>
             </ul>
           </div>
 
