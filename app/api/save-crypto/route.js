@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route"; // Percorso corretto
+import { authOptions } from "../../../lib/authOptions"; // Percorso corretto
 import { ObjectId } from "mongodb"; // Importa ObjectId
 import clientPromise from "../../../lib/mongodb"; // Percorso corretto
 
