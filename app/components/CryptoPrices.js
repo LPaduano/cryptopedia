@@ -117,7 +117,7 @@ const CryptoPrices = () => {
             <tr>
               <th className="p-2 text-left"></th>
               <th className="p-2 text-left">#</th>
-              <th className="p-2 text-left bg-white sticky left-0 z-10 sm:static">
+              <th className="p-2 text-left bg-white sticky left-0 z-10">
                 Crypto
               </th>
               <th className="p-2 text-right">Prezzo</th>

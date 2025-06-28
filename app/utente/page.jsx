@@ -1,8 +1,10 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
+import LogoutButton from "../components/LogoutButton";
 
 export default function PaginaUtente() {
   const { data: session, status } = useSession();
@@ -51,6 +53,9 @@ export default function PaginaUtente() {
             <strong>Criptovalute salvate:</strong>{" "}
             {userData.savedCryptos?.length || 0}
           </p>
+        </div>
+        <div className="mt-2 flex items-center justify-center">
+          <LogoutButton />
         </div>
       </div>
     </div>
