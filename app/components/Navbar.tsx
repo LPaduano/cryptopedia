@@ -143,6 +143,9 @@ const Navbar = () => {
           <Link href="/wallet" className="text-xl" onClick={toggleMenu}>
             Wallet
           </Link>
+          <Link href="/news" className="text-xl" onClick={toggleMenu}>
+            News
+          </Link>
           {status !== "loading" && !session?.user && (
             <div className="flex flex-col items-center space-y-2">
               <button
