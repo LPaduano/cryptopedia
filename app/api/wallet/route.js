@@ -34,7 +34,7 @@ export async function POST(req) {
 
   try {
     const body = await req.json();
-    const { id, name, quantity, price } = body;
+    const { id, name, quantity, price, date, symbol } = body;
 
     if (!id || !quantity || !price) {
       return NextResponse.json({ error: "Invalid input" }, { status: 400 });
@@ -53,7 +53,8 @@ export async function POST(req) {
             name,
             quantity,
             price,
-            date: new Date(),
+            date: date || new Date(),
+            symbol,
           },
         },
       }
@@ -71,6 +72,68 @@ export async function POST(req) {
     console.error("Errore POST:", error);
     return NextResponse.json(
       { error: "Errore nel salvataggio" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(req) {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user?.email) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const body = await req.json();
+    const { id, quantity, price, date, symbol } = body;
+    if (!id || !quantity || !price) {
+      return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+    }
+
+    const client = await clientPromise;
+    const db = client.db("crypto-db");
+    const userEmail = session.user.email.trim();
+
+    // Trova la transazione da aggiornare
+    const user = await db.collection("users").findOne({ email: userEmail });
+    const transactionIndex = user?.walletTransactions.findIndex(
+      (tx) => tx.id === id
+    );
+
+    if (transactionIndex === -1) {
+      return NextResponse.json(
+        { error: "Transazione non trovata" },
+        { status: 404 }
+      );
+    }
+
+    // Modifica la transazione
+    user.walletTransactions[transactionIndex] = {
+      ...user.walletTransactions[transactionIndex],
+      quantity,
+      price,
+      date,
+      symbol,
+    };
+
+    // Salva le modifiche
+    await db.collection("users").updateOne(
+      { email: userEmail },
+      {
+        $set: {
+          walletTransactions: user.walletTransactions,
+        },
+      }
+    );
+
+    return NextResponse.json({
+      success: true,
+      walletTransactions: user.walletTransactions,
+    });
+  } catch (error) {
+    console.error("Errore PUT:", error);
+    return NextResponse.json(
+      { error: "Errore nell'aggiornamento" },
       { status: 500 }
     );
   }
