@@ -289,6 +289,7 @@ const WalletPage = () => {
         <input
           type="date"
           onChange={(e) => setTransDate(e.target.value)}
+          max={new Date().toISOString().split("T")[0]}
           className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-200"
         />
 
