@@ -355,16 +355,16 @@ const WalletPage = () => {
       <div className="mt-8">
         {/* Tabella per Desktop */}
         <div className="overflow-x-auto w-full mt-8 md:block hidden">
-          <table className="min-w-[600px] table-auto border w-full">
+          <table className="min-w-[600px] table-auto w-full">
             <thead>
               <tr className="bg-gray-100">
-                <th className="border px-2 py-1">Crypto</th>
-                <th className="border px-2 py-1">Quantità</th>
-                <th className="border px-2 py-1">Prezzo Acquisto</th>
-                <th className="border px-2 py-1">Prezzo Attuale</th>
-                <th className="border px-2 py-1">Profitto/Perdita</th>
-                <th className="border px-2 py-1">Data</th>
-                <th className="border px-2 py-1" colSpan={2}>
+                <th className=" px-2 py-1">Crypto</th>
+                <th className=" px-2 py-1">Quantità</th>
+                <th className=" px-2 py-1">Prezzo Acquisto</th>
+                <th className=" px-2 py-1">Prezzo Attuale</th>
+                <th className=" px-2 py-1">Profitto/Perdita</th>
+                <th className=" px-2 py-1">Data</th>
+                <th className=" px-2 py-1" colSpan={2}>
                   Azioni
                 </th>
               </tr>
@@ -379,7 +379,7 @@ const WalletPage = () => {
 
                 return (
                   <tr key={index}>
-                    <td className="border px-2 py-1">
+                    <td className=" px-2 py-2">
                       <div className="flex items-center justify-evenly">
                         <img
                           src={currentCrypto.image}
@@ -391,24 +391,28 @@ const WalletPage = () => {
                         </p>
                       </div>
                     </td>
-                    <td className="border px-2 py-1">{tx.quantity}</td>
-                    <td className="border px-2 py-1">€{tx.price.toFixed(2)}</td>
-                    <td className="border px-2 py-1">€{current.toFixed(2)}</td>
+                    <td className=" px-2 py-2 text-center">{tx.quantity}</td>
+                    <td className=" px-2 py-2 text-center">
+                      €{tx.price.toFixed(2)}
+                    </td>
+                    <td className=" px-2 py-2 text-center">
+                      €{current.toFixed(2)}
+                    </td>
                     <td
-                      className={`border px-2 py-1 ${
+                      className={`text-center px-2 py-1 ${
                         isPositive ? "text-green-600" : "text-red-600"
                       }`}
                     >
                       {isPositive ? "+" : "-"}€{Math.abs(profit).toFixed(2)}
                     </td>
-                    <td className="border px-2 py-1">
+                    <td className=" px-2 py-2 text-center">
                       {new Date(tx.date).toLocaleDateString("it-IT", {
                         day: "2-digit",
                         month: "short",
                         year: "numeric",
                       })}
                     </td>
-                    <td className="border px-2 py-1 text-center">
+                    <td className=" px-2 py-2 text-center">
                       <button
                         onClick={() =>
                           setEditTx({
@@ -421,7 +425,7 @@ const WalletPage = () => {
                         Modifica
                       </button>
                     </td>
-                    <td className="border px-2 py-1 text-center">
+                    <td className="px-2 py-2 text-center">
                       <button
                         onClick={() => handleDeleteTransaction(tx.id)}
                         className="text-red-500 hover:text-red-700 text-sm hover:cursor-pointer"
