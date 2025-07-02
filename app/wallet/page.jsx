@@ -234,6 +234,31 @@ const WalletPage = () => {
       alert("Errore durante l'eliminazione della transazione.");
     }
   };
+  const calculateTotalSpent = (transactions) => {
+    return transactions.reduce((total, tx) => {
+      return total + tx.price * tx.quantity; // Somma prezzo * quantità per ogni transazione
+    }, 0);
+  };
+
+  // Calcola il valore totale attuale
+  const calculateTotalCurrentValue = (transactions, cryptoList) => {
+    return transactions.reduce((total, tx) => {
+      const currentPrice =
+        cryptoList.find((crypto) => crypto.id === tx.name)?.current_price || 0;
+      return total + currentPrice * tx.quantity; // Somma prezzo attuale * quantità per ogni transazione
+    }, 0);
+  };
+  const calculateProfitOrLoss = (transactions, cryptoList) => {
+    const totalSpent = calculateTotalSpent(transactions);
+    const totalCurrentValue = calculateTotalCurrentValue(
+      transactions,
+      cryptoList
+    );
+    return totalCurrentValue - totalSpent;
+  };
+
+  // Calcola profitto/perdita per determinare il colore
+  const totalProfitOrLoss = calculateProfitOrLoss(transactions, cryptoList);
 
   // Caricamento
   if (loading || !session)
@@ -250,7 +275,31 @@ const WalletPage = () => {
 
       {/* Grafico */}
       {chartData.length > 0 && <WalletChart data={chartData} />}
-
+      <div className="mb-6 text-lg font-semibold">
+        <div className="flex justify-between">
+          <span className="text-gray-700">Totale Speso:</span>
+          <span className="text-gray-900">
+            €{calculateTotalSpent(transactions).toFixed(2)}
+          </span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-gray-700">Valore Totale Attuale:</span>
+          <span className="text-gray-900">
+            €{calculateTotalCurrentValue(transactions, cryptoList).toFixed(2)}
+          </span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-gray-700">Profitto/Perdita:</span>
+          <span
+            className={`text-lg font-semibold ${
+              totalProfitOrLoss >= 0 ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {totalProfitOrLoss >= 0 ? "+" : "-"}€
+            {Math.abs(totalProfitOrLoss).toFixed(2)}
+          </span>
+        </div>
+      </div>
       {/* Form di aggiunta */}
       <div className="mb-6 space-y-6">
         {/* Selezione Crypto */}
